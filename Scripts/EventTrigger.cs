@@ -40,18 +40,22 @@ public class EventTrigger : MonoBehaviour
     public List<string> triggerTags;
 
     /// <summary>
-    /// Unity event to trigger actions when an object enters the trigger zone.
+    /// Unity event to trigger actions when an object enters the trigger zone. (e.g, entering collider bounds)
     /// </summary>
     public UnityEvent OnEnter;
 
     /// <summary>
-    /// Unity event to trigger actions when an object exits the trigger zone.
+    /// Unity event to trigger actions when an object exits the trigger zone. (e.g, exiting collider bounds)
     /// </summary>
     public UnityEvent OnExit;
 
-    private EventBase currentEvent;
-    private bool enterTriggered = false;
-    private bool exitTriggered = false;
+    /// <summary>
+    /// Holds the currentEvent <see cref="EventBase"/> being executed.
+    /// </summary>
+    EventBase currentEvent;
+    
+    bool enterTriggered = false;
+    bool exitTriggered = false;
 
     #region ==Validate==
     /// <summary>
@@ -69,7 +73,11 @@ public class EventTrigger : MonoBehaviour
     /// <summary>
     /// Validate the parent trigger to corresponding EventType assigned to this TriggerEvent GameObject
     /// </summary>
-    private void OnValidate() => eventDetails.ParentTrigger = this;
+    private void OnValidate() 
+    {
+        if (eventDetails.ParentTrigger != this)
+            eventDetails.ParentTrigger = this;
+    }
     #endregion ==Validate==
 
     #region ==Collision==
@@ -140,7 +148,8 @@ public class EventTrigger : MonoBehaviour
         if (currentEvent.CanTrigger())
         {
             OnExit?.Invoke();
-
+            currentEvent = null;
+            
             if (triggerOnce)
                 exitTriggered = true;
         }
@@ -171,6 +180,7 @@ public class EventTrigger : MonoBehaviour
                 // Additional custom event details can be added here
                 break;
             case EventType.Interactable:
+                // Example Interactable Details
                 eventDetails.AddDetail("details", eventDetails.InteractableDetails);
                 break;
             default:
@@ -197,7 +207,7 @@ public class EventTrigger : MonoBehaviour
     /// <summary>
     /// Checks if the player's HP is full. Placeholder method for condition checking.
     /// </summary>
-    bool HPFull() => PlayerManager.PlayerHP.HPFull();
+    bool HPFull() => /*PlayerManager.PlayerHP.HPFull()*/  true;
 
     /// <summary>
     /// Checks if the player has a key item in their inventory. Placeholder method for condition checking.
@@ -207,6 +217,6 @@ public class EventTrigger : MonoBehaviour
     /// <summary>
     /// Checks if all enemy groups are defeated, allowing the level to be finished. Placeholder method for condition checking.
     /// </summary>
-    bool CanFinishLevel() => EnemyManager.Instance.AreGroupsEmpty(groupIDs);
+    bool CanFinishLevel() => /*EnemyManager.Instance.AreGroupsEmpty(groupIDs)*/ true;
     #endregion ==Condition Checks==
 }

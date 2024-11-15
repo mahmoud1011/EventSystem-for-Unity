@@ -49,8 +49,8 @@ public class EventInteractablesController : Singleton<EventInteractablesControll
     [SerializeField, ReadOnly]
     private EventInteractableDetails currentInteractableDetails;
 
-    private Dictionary<string, InteractableInfo> interactableMap;
-    private Dictionary<string, bool> interactableStatus;
+    Dictionary<string, InteractableInfo> interactableMap;
+    Dictionary<string, bool> interactableStatus;
 
     #region ==Init==
     /// <summary>
@@ -132,19 +132,6 @@ public class EventInteractablesController : Singleton<EventInteractablesControll
         {
             LogManager.LogError("Interaction event triggered without valid ID.");
         }
-    }
-
-    /// <summary>
-    /// Handles timed events by waiting for a delay and then invoking the associated Unity event.
-    /// </summary>
-    /// <param name="delay">The amount of time to wait before invoking the event.</param>
-    /// <param name="timedEvent">The Unity event to be invoked after the delay.</param>
-    /// <returns>An IEnumerator for yielding in a coroutine.</returns>
-    IEnumerator HandleTimedEvent(float delay, UnityEvent timedEvent)
-    {
-        yield return new WaitForSeconds(delay);
-
-        timedEvent?.Invoke();
     }
 
     /// <summary>

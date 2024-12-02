@@ -57,9 +57,4 @@ public class EventDetails
     /// </summary>
     /// <returns>An enumerable of key-value pairs representing all event details.</returns>
     public IEnumerable<KeyValuePair<string, object>> GetAllDetails() => details;
-
-
-    // For Unity-inspector validation
-    bool IsInteractableEvent()
-    => ParentTrigger != null && ParentTrigger.eventType == EventType.Interactable;
 }

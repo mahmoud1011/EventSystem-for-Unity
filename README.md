@@ -60,3 +60,5 @@ Here’s how you might use these components in your game:
     }
    ```
 
+## License
+[MIT License](LICENSE)
